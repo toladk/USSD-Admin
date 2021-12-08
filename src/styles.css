@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+/*Always add body and ::-webkit-scrollbar to other template as well*/
+
+body{
+  background-color: #f8f8fa;
+}
+
+.inne{
+  color: #e1000a !important;
+}

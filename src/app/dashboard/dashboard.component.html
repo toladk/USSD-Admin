@@ -1,0 +1,85 @@
+<div class="breadcrumb-area">
+    <h1>Dashboard</h1>
+    <ol class="breadcrumb">
+        <li class="item">
+            <a><i class="bx bx-home-alt" style="color: #4BA145 !important;"></i
+      ></a>
+        </li>
+        <li class="item">Dashboard</li>
+    </ol>
+</div>
+
+<div class="welcome-area">
+    <div class="row m-0 align-items-center">
+        <div class="col-lg-12 col-md-12 p-0">
+            <div class="welcome-content">
+                <h1 class="mb-2">Hi, Welcome back</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ecommerce-stats-area">
+    <div class="row">
+        <div class="col-lg-4 col-sm-6 col-md-6">
+            <div class="single-stats-card-box">
+                <div class="icon" style="background-color: #e1000a !important">
+                    <i class="bx bxs-user-rectangle"></i>
+                </div>
+                <span class="sub-title">Total No of Users</span>
+                <h3 class="inne">
+                    {{ allUsers.length }}
+                </h3>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-md-6">
+            <div class="single-stats-card-box">
+                <div class="icon" style="background-color: #4788ff !important;">
+                    <i class="bx bxs-map-pin"></i>
+                </div>
+                <span class="sub-title">Total No of PIN Requested</span>
+                <h3 class="" style="color: #4788ff;">
+                    {{ allPinResetRequest.length }}
+                </h3>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-md-6">
+            <div class="single-stats-card-box">
+                <div class="icon" style="background-color: #13bb37 !important;">
+                    <i class="bx bx-mobile"></i>
+                </div>
+                <span class="sub-title">Total No of USSD Limit</span>
+                <h3 class="" style="color: #13bb37;">
+                    {{ allUssdLimit.length }}
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ecommerce-stats-area">
+    <div class="row">
+        <div class="col-lg-6 col-sm-6 col-md-6" style="padding-left: 90px;">
+            <div class="single-stats-card-box">
+                <div class="icon" style="background-color: #ff4b00 !important">
+                    <i class="bx bxs-user-check"></i>
+                </div>
+                <span class="sub-title">Total No of Enable User Request</span>
+                <h3 class="" style="color: #ff4b00;">
+                    {{ userEnableRequest.length }}
+                </h3>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-md-6" style="padding-left: 90px;">
+            <div class="single-stats-card-box">
+                <div class="icon" style="background-color: rgb(105, 86, 206) !important">
+                    <i class="bx bxs-user-x"></i>
+                </div>
+                <span class="sub-title">Total No of Disable User Request</span>
+                <h3 class="" style="color: rgb(105, 86, 206);">
+                    {{ userDisableRequest.length }}
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>

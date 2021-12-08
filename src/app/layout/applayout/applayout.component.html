@@ -1,0 +1,211 @@
+<div class="sidemenu-area">
+    <div class="sidemenu-header">
+        <a href="dashboard-analytics.html" class="navbar-brand d-flex align-items-center">
+            <img src="assets/img/loginlogo.png" alt="image" width="110px" />
+        </a>
+        <div class="burger-menu d-none d-lg-block">
+            <span class="top-bar"></span>
+            <span class="middle-bar"></span>
+            <span class="bottom-bar"></span>
+        </div>
+        <div class="responsive-burger-menu d-block d-lg-none">
+            <span class="top-bar"></span>
+            <span class="middle-bar"></span>
+            <span class="bottom-bar"></span>
+        </div>
+    </div>
+    <div class="sidemenu-body">
+        <ul class="sidemenu-nav metisMenu h-100" id="sidemenu-nav" data-simplebar>
+            <li class="nav-item-title">Main</li>
+            <li class="nav-item">
+                <a routerLink="dashboard" class="nav-link">
+                    <span class="icon"><i class="bx bx-grid-alt"></i></span>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item-title">Customers</li>
+            <li class="nav-item">
+                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
+                    <span class="icon"><i class="bx bx-user"></i></span>
+                    <span class="menu-title">Customer Management</span>
+                </a>
+                <ul class="sidemenu-nav-second-level">
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWALLUSERS') > -1">
+                        <a routerLink="manage-user" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Manage Customer</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWALLPENDINGUSSDUSERPROFILEENABLEREQUEST') > -1">
+                        <a routerLink="enable-user" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Enable Customer Request</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWALLPENDINGUSSDUSERPROFILEDISABLEREQUEST') > -1">
+                        <a routerLink="disable-user" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Disable Customer Request</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="nav-item-title">Pin</li>
+            <li class="nav-item">
+                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
+                    <span class="icon"><i class="bx bx bxs-map-pin"></i></span>
+                    <span class="menu-title">PIN Management</span>
+                </a>
+                <ul class="sidemenu-nav-second-level">
+                    <li class="nav-item">
+                        <a routerLink="approve-pin" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Pending PIN Request</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWALLPENDINGPINRESET') > -1">
+                        <a routerLink="reset-pin" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">PIN Reset Request</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="nav-item-title">USSD</li>
+            <li class="nav-item">
+                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
+                    <span class="icon"><i class="bx bx bxs-mobile"></i></span>
+                    <span class="menu-title">USSD Management</span>
+                </a>
+                <ul class="sidemenu-nav-second-level">
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWALLLIMITS') > -1">
+                        <a routerLink="ussd-limit" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">USSD Limit</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWALLPENDINGLIMITREQUEST') > -1">
+                        <a routerLink="approve-limit" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Approve USSD Limit</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item-title">Report</li>
+            <li class="nav-item">
+                <a href="#" class="collapsed-nav-link nav-link" aria-expanded="false">
+                    <span class="icon"><i class="bx bx bxs-mobile"></i></span>
+                    <span class="menu-title">Report</span>
+                </a>
+                <ul class="sidemenu-nav-second-level">
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWREPORT') > -1">
+                        <a routerLink="report" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Report</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWREPORT') > -1">
+                        <a routerLink="profile-report" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Profile Report</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWREPORT') > -1">
+                        <a routerLink="sub-report" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">USSD Subscriber Report</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWREPORT') > -1">
+                        <a routerLink="airtime-report" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Airtime Report</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWREPORT') > -1">
+                        <a routerLink="fund-transfer-report" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Fund Transfer Report</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWREPORT') > -1">
+                        <a routerLink="bill-payment-report" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Bill Payment Report</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="permissionList.indexOf('CANVIEWREPORT') > -1">
+                        <a routerLink="limit-increase-report" class="nav-link">
+                            <span class="icon"><i class="bx bx-right-arrow-alt"></i></span>
+                            <span class="menu-title">Limit Increase Report</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<div class="main-content d-flex flex-column">
+    <nav class="navbar top-navbar navbar-expand">
+        <div class="collapse navbar-collapse" id="navbarSupportContent">
+            <div class="responsive-burger-menu d-block d-lg-none">
+                <span class="top-bar"></span>
+                <span class="middle-bar"></span>
+                <span class="bottom-bar"></span>
+            </div>
+            <ul class="navbar-nav left-nav align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link"><i class="bx bx-grid-alt"></i></a>
+                </li>
+            </ul>
+            <ul class="navbar-nav right-nav align-items-center" style="margin-left: 870px">
+                <li class="nav-item">
+                    <a class="nav-link bx-fullscreen-btn" id="fullscreen-button">
+                        <i class="bx bx-fullscreen"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown profile-nav-item">
+                    <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="menu-profile">
+                            <span class="name">{{ userDetails.username }}</span>
+                            <img src="assets/img/user1.jpg" class="rounded-circle" alt="image" />
+                        </div>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-header d-flex flex-column align-items-center">
+                            <div class="icon-box">
+                                <i class="bx bx-user" style="font-size: 30px;"></i>
+                            </div>
+                            <div class="info text-center">
+                                <span class="name">{{ userDetails.username }}</span>
+                                <p class="mb-3 email">
+                                    <a class="__cf_email__" style="color: dodgerblue;">{{ userDetails.email }}</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="dropdown-footer">
+                            <ul class="profile-nav">
+                                <li class="nav-item" (click)="LogOut()">
+                                    <a class="nav-link">
+                                        <i class="bx bx-log-out"></i> <span>Logout</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <router-outlet></router-outlet>
+</div>

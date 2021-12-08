@@ -1,0 +1,160 @@
+<div class="breadcrumb-area">
+    <h1>USSD</h1>
+    <ol class="breadcrumb">
+        <li class="item">
+            <a><i class="bx bx-home-alt" style="color: #4BA145 !important;"></i
+      ></a>
+        </li>
+        <li class="item">USSD Management</li>
+        <li class="item">USSD Limit</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card recent-orders-box mb-30">
+            <div class="card-header d-flex justify-content-between align-items-center mt-3">
+                <div class="col-md-7 pl-0">
+                    <h3>Manage USSD Limit</h3>
+                </div>
+                <div class="col-md-5">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                        <input type="text" nz-input [(ngModel)]="searchValue" placeholder="Search text" />
+                    </nz-input-group>
+                    <ng-template #suffixIconButton>
+                        <button nz-button nzType="primary" nzSearch style="background-color: #4BA145; border-color: #4BA145;"><i nz-icon nzType="search"></i></button>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="card-body mt-4">
+                <div class="table-responsive" *ngIf="allUssdLimitList.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th (click)="sort('name')" style="cursor: pointer !important;">Limit Name <i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let list of allUssdLimitList | ussdlimifilter: searchValue | paginate: {itemsPerPage: 10 , currentPage: pagination} | orderBy: key: reverse; let i = index">
+                                <td scope="row">{{ i+1 }}</td>
+                                <td>{{ list.name }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-warning btn-sm" (click)="sendLimitReq(list.id, list.name)" *ngIf="permissionList.indexOf('CANEDITLIMIT') > -1"><i class="bx bxs-key mr-2"></i>Send Limit Reset Change</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-0">
+                        <div class="row d-flex">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0">
+                                <p class="text-dark-75 font-weight-bolder">Total Ussd Limit; {{ allUssdLimitList.length }}</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0 text-dark-75 font-weight-bolder">
+                                <pagination-controls (pageChange)="pagination = $event" class="float-right" responsive="true"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive" *ngIf="allUssdLimitList.length < 1">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th (click)="sort('name')" style="cursor: pointer !important;"> Limit Name <i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="10">
+                                    <div class="text-center mg-b-20" style="margin-top: 25px !important;" *ngIf="show">
+                                        <div class="spinner-border">
+                                            <span class="sr-only"></span>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mg-b-20" style="margin-top: 25px !important;" *ngIf="show2">
+                                        <div class="text-dark-75 font-weight-bolder">No Data !!!</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-0">
+                        <div class="row d-flex">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0">
+                                <p class="text-dark-75 font-weight-bolder">Total Ussd Limit; {{ allUssdLimitList.length }}</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0 text-dark-75 font-weight-bolder">
+                                <pagination-controls (pageChange)="pagination = $event" class="float-right" responsive="true"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Drawer For Preview Transaction-->
+<nz-drawer [nzBodyStyle]="{ overflow: 'auto' }" [nzMaskClosable]="true" [nzWidth]="670" [nzVisible]="drawerOpen" nzTitle="Send Limit Change Request" [nzFooter]="footerTpl" (nzOnClose)="close()">
+    <form nz-form *nzDrawerContent [formGroup]="limitForm">
+        <div class="col-md-12 col-lg-12 pl-0 pr-0">
+
+            <div class="col-md-12 col-lg-12" style="padding-bottom: 20px;">
+                <div class="row row-xs mt-3">
+                    <div class="col-md-12">
+                        <div class="az-form-group">
+                            <nz-form-item style="margin-bottom: 9px !important;">
+                                <nz-form-control nzErrorTip="Please enter description!">
+                                    <label class="form-label" style="font-weight: 600; color: darkslategray;">Limit Description</label>
+                                    <nz-input-group nzPrefixIcon="container">
+                                        <input type="text" formControlName="description" nz-input placeholder="Enter Limit Description" />
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-xs mt-3">
+                    <div class="col-md-6">
+                        <div class="az-form-group">
+                            <nz-form-item style="margin-bottom: 9px !important;">
+                                <nz-form-control nzErrorTip="Please enter maximum transaction value!">
+                                    <label class="form-label" style="font-weight: 600; color: darkslategray;">Maximum Transaction Value</label>
+                                    <nz-input-group nzPrefixIcon="area-chart">
+                                        <input type="number" formControlName="maximumTransactionValue" nz-input placeholder="Enter Maximum Transaction Value" />
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mg-t-20 mg-md-t-0">
+                        <div class="az-form-group">
+                            <nz-form-item style="margin-bottom: 9px !important;">
+                                <nz-form-control nzErrorTip="Please enter maximum daily transaction!">
+                                    <label class="form-label" style="font-weight: 600; color: darkslategray;">Maximum Daily Transaction</label>
+                                    <nz-input-group nzPrefixIcon="bar-chart">
+                                        <input type="number" formControlName="maximumDailyTransaction" nz-input placeholder="Enter Maximum Daily Transaction" />
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <ng-template #footerTpl>
+        <div style="float: right">
+            <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
+            <button nz-button nzType="primary" style="background: #57B952; border-color: #57B952;" (click)="sendLimitRequest()"><i class="typcn typcn-eye mr-2"></i>Send Request</button>
+        </div>
+    </ng-template>
+</nz-drawer>

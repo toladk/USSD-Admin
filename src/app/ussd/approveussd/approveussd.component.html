@@ -1,0 +1,109 @@
+<div class="breadcrumb-area">
+    <h1>USSD</h1>
+    <ol class="breadcrumb">
+        <li class="item">
+            <a><i class="bx bx-home-alt" style="color: #4BA145 !important;"></i
+      ></a>
+        </li>
+        <li class="item">USSD Management</li>
+        <li class="item">Approve USSD Limit</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card recent-orders-box mb-30">
+            <div class="card-header d-flex justify-content-between align-items-center mt-3">
+                <div class="col-md-7 pl-0">
+                    <h3>Manage Limit Request Approval</h3>
+                </div>
+                <div class="col-md-5">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                        <input type="text" nz-input [(ngModel)]="searchValue" placeholder="Search text" />
+                    </nz-input-group>
+                    <ng-template #suffixIconButton>
+                        <button nz-button nzType="primary" nzSearch style="background-color: #4BA145; border-color: #4BA145;"><i nz-icon nzType="search"></i></button>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="card-body mt-4">
+                <div class="table-responsive" *ngIf="allPendingLimitsRequestList.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th (click)="sort('name')" style="cursor: pointer !important;">Limit Name <i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('description')" style="cursor: pointer !important;">Description<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('maximumTransactionValue')" style="cursor: pointer !important;">Maximum Trasaction Value<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('maximumDailyTransaction')" style="cursor: pointer !important;">Maximum Daily Transaction<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let list of allPendingLimitsRequestList | ussdfilter: searchValue | paginate: {itemsPerPage: 10 , currentPage: pagination} | orderBy: key: reverse; let i = index">
+                                <td scope="row">{{ i+1 }}</td>
+                                <td>{{ list.name }}</td>
+                                <td>{{ list.description }}</td>
+                                <td>{{ list.maximumTransactionValue }}</td>
+                                <td>{{ list.maximumDailyTransaction }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-success btn-sm" nz-popconfirm nzPopconfirmTitle="Confirm to approve limit reset request!!" nzOkText="Approve Limit Reset Request" nzCancelText="cancel" (nzOnConfirm)="approveLimitRequest(list.id)" (nzOnCancel)="cancel()"
+                                        *ngIf="permissionList.indexOf('CANAPPROVELIMIT') > -1"><i class="bx bxs-check-square mr-2"></i>Approve Limit Reset Request</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-0">
+                        <div class="row d-flex">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0">
+                                <p class="text-dark-75 font-weight-bolder">Total Limit Request; {{ allPendingLimitsRequestList.length }}</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0 text-dark-75 font-weight-bolder">
+                                <pagination-controls (pageChange)="pagination = $event" class="float-right" responsive="true"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive" *ngIf="allPendingLimitsRequestList.length < 1">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th (click)="sort('name')" style="cursor: pointer !important;">Limit Name <i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('description')" style="cursor: pointer !important;">Description<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('maximumTransactionValue')" style="cursor: pointer !important;">Maximum Trasaction Value<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('maximumDailyTransaction')" style="cursor: pointer !important;">Maximum Daily Transaction<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="10">
+                                    <div class="text-center mg-b-20" style="margin-top: 25px !important;" *ngIf="show">
+                                        <div class="spinner-border">
+                                            <span class="sr-only"></span>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mg-b-20" style="margin-top: 25px !important;" *ngIf="show2">
+                                        <div class="text-dark-75 font-weight-bolder">No Data !!!</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-0">
+                        <div class="row d-flex">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0">
+                                <p class="text-dark-75 font-weight-bolder">Total Limit Request; {{ allPendingLimitsRequestList.length }}</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0 text-dark-75 font-weight-bolder">
+                                <pagination-controls (pageChange)="pagination = $event" class="float-right" responsive="true"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

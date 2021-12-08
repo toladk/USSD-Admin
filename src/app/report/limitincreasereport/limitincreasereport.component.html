@@ -1,0 +1,149 @@
+<div class="breadcrumb-area">
+    <h1>Report</h1>
+    <ol class="breadcrumb">
+        <li class="item">
+            <a><i class="bx bx-home-alt" style="color: #4BA145 !important;"></i></a>
+        </li>
+        <li class="item">Report Management</li>
+        <li class="item">Limit Increase Report</li>
+    </ol>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="card recent-orders-box mb-30">
+            <form [formGroup]="limitIncreaseReportForm">
+                <div class="col-md-12 pr-0 pl-0 d-flex mt-3 mb-3">
+                    <div class="col-md-3 pl-0">
+                        <div class="az-form-group">
+                            <nz-form-item style="margin-bottom: 9px !important;">
+                                <nz-form-control nzErrorTip="Please enter From Date!">
+                                    <label class="form-label" style="font-weight: 600; color: darkslategray;">Start Date</label>
+                                    <nz-input-group nzPrefixIcon="right-square">
+                                        <input type="date" formControlName="startDate" nz-input placeholder="Enter Date" />
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pl-0">
+                        <div class="az-form-group">
+                            <nz-form-item style="margin-bottom: 9px !important;">
+                                <nz-form-control nzErrorTip="Please enter To Date!">
+                                    <label class="form-label" style="font-weight: 600; color: darkslategray;">End Date</label>
+                                    <nz-input-group nzPrefixIcon="left-square">
+                                        <input type="date" formControlName="endDate" nz-input placeholder="Enter Date" />
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                    </div>
+                    <div class="col-md-6 pr-0">
+                        <div class="float-right mt-4 ml-2"><button class="btn btn-success btn-with-icon btn-block" *ngIf="downloadBtn" (click)="downloadReport()"><i class="bx bxs-down-arrow-square mr-2"></i> Download Report</button></div>
+
+                        <div class="float-right mt-4"><button class="btn btn-success btn-with-icon btn-block" [disabled]="this.limitIncreaseReportForm.value.endDate === ''" *ngIf="reportBtn" (click)="getReport()"><i class="bx bxs-download mr-2"></i> Get Report</button></div>
+                        <div class="float-right mt-4"><button class="btn btn-warning btn-with-icon btn-block" *ngIf="reportBtn2"><i class="bx bxs-download mr-2"></i> Getting Report</button></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="show3">
+    <div class="col-lg-12 col-md-12">
+        <div class="card recent-orders-box mb-30">
+            <div class="card-header d-flex justify-content-between align-items-center mt-3">
+                <div class="col-md-7 pl-0">
+                    <h3>Manage USSD Limit Report</h3>
+                </div>
+                <div class="col-md-5">
+                    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                        <input type="text" nz-input [(ngModel)]="searchValue" placeholder="Search text" />
+                    </nz-input-group>
+                    <ng-template #suffixIconButton>
+                        <button nz-button nzType="primary" nzSearch style="background-color: #4BA145; border-color: #4BA145;"><i nz-icon nzType="search"></i></button>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="card-body mt-4">
+                <div class="table-responsive" *ngIf="allLimitIncreaseReportList.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th (click)="sort('userId')" style="cursor: pointer !important;">ID<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('accountNumber')" style="cursor: pointer !important;">Friendly Name<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('transactionId')" style="cursor: pointer !important;">Phone No<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('transactionAmount')" style="cursor: pointer !important;">Group Limit<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('transactionDate')" style="cursor: pointer !important;">Default Account<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('transactionResponse')" style="cursor: pointer !important;">Status<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let list of allLimitIncreaseReportList | limitincreasereportfilter: searchValue | paginate: {itemsPerPage: 10 , currentPage: pagination} | orderBy: key: reverse; let i = index">
+                                <td scope="row">{{ i+1 }}</td>
+                                <td>{{ list.userId }}</td>
+                                <td>{{ list.accountNumber }}</td>
+                                <td>{{ list.transactionId }}</td>
+                                <td>{{ list.transactionAmount | currency:'NGN':'symbol-narrow' }}</td>
+                                <td>{{ list.transactionDate | date }}</td>
+                                <td>{{ list.transactionResponse }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-0">
+                        <div class="row d-flex">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0">
+                                <p class="text-dark-75 font-weight-bolder">Total Report {{ allLimitIncreaseReportList.length }}</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0 text-dark-75 font-weight-bolder">
+                                <pagination-controls (pageChange)="pagination = $event" class="float-right" responsive="true"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive" *ngIf="allLimitIncreaseReportList.length < 1">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th (click)="sort('userId')" style="cursor: pointer !important;">ID<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('accountNumber')" style="cursor: pointer !important;">Friendly Name<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('transactionId')" style="cursor: pointer !important;">Phone No<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('transactionAmount')" style="cursor: pointer !important;">Group Limit<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('transactionDate')" style="cursor: pointer !important;">Default Account<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                                <th (click)="sort('transactionResponse')" style="cursor: pointer !important;">Status<i nz-icon nzType="sort-ascending" nzTheme="outline" class="ml-2"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="12">
+                                    <div class="text-center mg-b-20" style="margin-top: 25px !important;" *ngIf="show">
+                                        <div class="spinner-border">
+                                            <span class="sr-only"></span>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mg-b-20" style="margin-top: 25px !important;" *ngIf="show2">
+                                        <div class="text-dark-75 font-weight-bolder">No Data !!!</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-5 mb-0">
+                        <div class="row d-flex">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0">
+                                <p class="text-dark-75 font-weight-bolder">Total Report {{ allLimitIncreaseReportList.length }}</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mb-0 text-dark-75 font-weight-bolder">
+                                <pagination-controls (pageChange)="pagination = $event" class="float-right" responsive="true"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
